@@ -2,20 +2,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const whatsappRoutes = require("./routes/whatsapp");
-
 dotenv.config();
 const app = express();
 app.use(express.json());
-
 app.use("/whatsapp", whatsappRoutes);
-app.get("/", (req, res) => {
-  res.send("Bot WhatsApp Live");
-});
-
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log("MongoDB conectado"))
-  .catch((err) => console.error(err));
-
-app.listen(process.env.PORT || 3000, () => {
-  console.log("Servidor corriendo");
-});
+app.get("/", (req, res) => { res.send("Bot WhatsApp Live"); });
+mongoose.connect(process.env.MONGODB_URI).then(()=>console.log("MongoDB OK")).catch(e=>console.error(e));
+app.listen(process.env.PORT || 3000, ()=>console.log("Live"));
