@@ -1,24 +1,21 @@
-require('dns').setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1']);
 const express = require("express");
-const app = express();
-const dotenv = require("dotenv");
-dotenv.config();
-
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 const whatsappRoutes = require("./routes/whatsapp");
 
+dotenv.config();
+const app = express();
 app.use(express.json());
 
-// Rutas
 app.use("/whatsapp", whatsappRoutes);
+app.get("/", (req, res) => {
+  res.send("Bot WhatsApp Live");
+});
 
-// Conexión a MongoDB
-mongoose
-  .connect(process.env.MONGO_URL)
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log("MongoDB conectado"))
-  .catch((err) => console.error("Error en MongoDB:", err));
+  .catch((err) => console.error(err));
 
-// Servidor
 app.listen(process.env.PORT || 3000, () => {
-  console.log("Servidor corriendo en puerto 3000");
+  console.log("Servidor corriendo");
 });
